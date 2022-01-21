@@ -1,10 +1,22 @@
+import { BrowserRouter, Route ,Routes} from 'react-router-dom';
 import './App.css';
+import Header from './Components/Header'
+import Homepage from './Pages/Homepage';
+import CoinPage from './Pages/CoinPage';
+
 
 function App() {
+
   return (
-    <div className="App">
-      Hello Word
-    </div>
+    <BrowserRouter>
+      <div>
+        <Header />
+        <Routes>
+        <Route path="/" element={<Homepage/>} exact />
+        <Route path="/coins/:id" element={<CoinPage/>} />
+        </Routes>
+      </div>
+    </BrowserRouter>
   );
 }
 
