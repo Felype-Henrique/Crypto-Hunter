@@ -22,9 +22,9 @@ const useStyles = makeStyles((theme) => ({
       },
 }));
 
-export function numberWithCommas(x){
+export function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
+  }
 
 const Carousel = () => {
     const [ trending , setTrending] = useState([])
@@ -63,11 +63,11 @@ const Carousel = () => {
                    &nbsp;
                    <span
                     style={{
-                    color: profit > 0 ? "rgb(14, 203, 129)" : "red",
+                    color: profit > 0 ? "red" : "rgb(14, 203, 129)",
                     fontWeight: 500,
                      }}
                    >
-                   {profit && "+"}
+                   {profit ? "" : "+"}
                    {coin?.price_change_percentage_24h?.toFixed(2)}%
                    </span>
                 </span>

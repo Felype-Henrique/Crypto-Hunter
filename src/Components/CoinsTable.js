@@ -21,17 +21,15 @@ import {
   Typography,
 } from "@material-ui/core";
 import { Pagination } from "@material-ui/lab";
+import { numberWithCommas } from "./Banner/Carousel";
 
-export function numberWithCommas(x) {
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  }
 
 const CoinsTable = () => {
   const [coins, setCoins] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [search, setSearch] = useState();
+  const [search, setSearch] = useState("");
   const [ page, setPage] = useState(1);
-  const history = useNavigate();
+  const navigate = useNavigate();
 
   const { currency, symbol } = CryptoState();
 
@@ -129,12 +127,12 @@ const CoinsTable = () => {
                 </TableHead>
                 <TableBody>
                 {handleSearch()
-                  .slice((page - 1) * 10,(page-1)* 10 + 10)
+                  .slice((page - 1) * 10,(page - 1) * 10 + 10)
                   .map((row) => {
-                    const profit = row.price_change_percentage_24h > 0;
+                    let profit = row.price_change_percentage_24h < 0;
                     return (
                       <TableRow
-                        onClick={() => history.push(`/coins/${row.id}`)}
+                        onClick={() => navigate(`/coins/${row.id}`)}
                         className={classes.row}
                         key={row.name}
                       >
@@ -175,19 +173,19 @@ const CoinsTable = () => {
                         <TableCell
                           align="right"
                           style={{
-                            color: profit > 0 ? "rgb(14, 203, 129)" : "red",
+                            color: profit > 0 ? "red" : "rgb(14, 203, 129)",
                             fontWeight: 500,
                           }}
                         >
-                          {profit && "+"}
+                          {profit ? "" : "+"}
                           {row.price_change_percentage_24h.toFixed(2)}%
                         </TableCell>
                         <TableCell align="right">
                           {symbol}{" "}
                           {numberWithCommas(
-                            row.market_cap.toString().slice(0, -6)
+                            row.market_cap.toString().slice(0)
                           )}
-                          M
+                          .00
                         </TableCell>
                       </TableRow>
                     );
